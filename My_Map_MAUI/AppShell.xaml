@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="My_Map_MAUI.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:My_Map_MAUI.Views"
+    Shell.FlyoutBehavior="Disabled">
+
+
+    <ShellContent
+        Title="Sign In"
+        ContentTemplate="{DataTemplate local:SignInPage}"
+        Route="SignInPage"
+        Shell.FlyoutItemIsVisible="False" />
+    <ShellContent
+        Title="Sign Up"
+        ContentTemplate="{DataTemplate local:SignUpPage}"
+        Route="SignUpPage"
+        Shell.FlyoutItemIsVisible="False" />
+    <ShellContent
+        Title="Forgot Password"
+        ContentTemplate="{DataTemplate local:ForgotPasswordPage}"
+        Route="ForgotPasswordPage"
+        Shell.FlyoutItemIsVisible="False" />
+    <FlyoutItem Title="Home" Route="Home">
+        <ShellContent
+            Title="Map"
+            ContentTemplate="{DataTemplate local:MapPage}"
+            Icon="map.png"
+            Route="MapPage" />
+        <ShellContent
+            Title="Location"
+            ContentTemplate="{DataTemplate local:LocationPage}"
+            Icon="pin.png"
+            Route="LocationPage" />
+        <ShellContent
+            Title="Schedule"
+            ContentTemplate="{DataTemplate local:SchedulePage}"
+            Icon="calendar.png"
+            Route="SchedulePage" />
+        <ShellContent
+            Title="Account"
+            ContentTemplate="{DataTemplate local:AccountPage}"
+            Icon="user_1.png"
+            Route="AccountPage" />
+    </FlyoutItem>
+</Shell>

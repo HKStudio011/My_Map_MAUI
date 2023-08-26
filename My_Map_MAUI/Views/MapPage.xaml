@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="My_Map_MAUI.Views.MapPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:maps="clr-namespace:Microsoft.Maui.Controls.Maps;assembly=Microsoft.Maui.Controls.Maps"
+    xmlns:model="clr-namespace:My_Map_MAUI.Models"
+    xmlns:sensors="clr-namespace:Microsoft.Maui.Devices.Sensors;assembly=Microsoft.Maui.Essentials"
+    xmlns:viewmodel="clr-namespace:My_Map_MAUI.ViewModels"
+    Title="{Binding Title}"
+    x:DataType="viewmodel:MapViewModels">
+    <Grid>
+        <maps:Map
+            x:Name="map"
+            IsShowingUser="{OnPlatform Default=True,
+                                       Android=True,
+                                       iOS=True,
+                                       WinUI=False}"
+            IsTrafficEnabled="True"
+            IsVisible="{Binding IsConnectNetwork}"
+            ItemsSource="{Binding ItemsCollection}"
+            MapClicked="map_MapClicked"
+            MapType="Street">
+            <maps:Map.ItemTemplate>
+                <DataTemplate x:DataType="model:Items">
+                    <maps:Pin
+                        x:DataType="model:PinItems"
+                        Address="{Binding Address}"
+                        InfoWindowClicked="Pin_InfoWindowClicked"
+                        Label="{Binding Label}"
+                        Location="{Binding Location}"
+                        MarkerClicked="Pin_MarkerClicked" />
+                </DataTemplate>
+            </maps:Map.ItemTemplate>
+        </maps:Map>
+        <Grid IsVisible="{Binding IsNotConnectNetwork}">
+            <Frame BackgroundColor="White">
+                <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center">
+                    <Image
+                        Aspect="AspectFit"
+                        HeightRequest="100"
+                        Source="globe.png"
+                        WidthRequest="100" />
+                    <Button
+                        Command="{Binding CheckNetwordCommand}"
+                        HorizontalOptions="Center"
+                        Text="Reload"
+                        VerticalOptions="Center" />
+                </VerticalStackLayout>
+            </Frame>
+        </Grid>
+        <Grid>
+            <VerticalStackLayout>
+                <Frame
+                    Margin="60,15,60,0"
+                    Padding="0"
+                    BorderColor="{StaticResource Primary}"
+                    HeightRequest="35">
+                    <Grid ColumnDefinitions="auto,*" ColumnSpacing="5">
+                        <Entry
+                            Grid.Column="1"
+                            Margin="0,0,40,0"
+                            FontSize="Caption"
+                            MaxLength="32"
+                            Placeholder="Search"
+                            Text="{Binding SearchContent, Mode=TwoWay}" />
+                        <Frame
+                            Grid.Column="1"
+                            Margin="10,0"
+                            Padding="0"
+                            BackgroundColor="Transparent"
+                            BorderColor="Transparent"
+                            HorizontalOptions="End"
+                            VerticalOptions="Center">
+                            <Grid>
+                                <Image
+                                    Aspect="AspectFill"
+                                    HeightRequest="25"
+                                    Source="search.png"
+                                    WidthRequest="25" />
+                            </Grid>
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding SearchCommand}" CommandParameter="{x:Reference map}" />
+                            </Frame.GestureRecognizers>
+                        </Frame>
+
+                    </Grid>
+                </Frame>
+            </VerticalStackLayout>
+        </Grid>
+        <Grid IsVisible="{Binding IsBusy}">
+            <Frame BackgroundColor="White" Opacity="0.5" />
+            <Frame
+                BackgroundColor="White"
+                HorizontalOptions="CenterAndExpand"
+                VerticalOptions="CenterAndExpand">
+                <HorizontalStackLayout Spacing="10">
+                    <Label Text="{Binding Proccess}" VerticalOptions="Center" />
+                    <ActivityIndicator IsRunning="{Binding IsBusy}" />
+                </HorizontalStackLayout>
+
+            </Frame>
+
+        </Grid>
+    </Grid>
+
+</ContentPage>

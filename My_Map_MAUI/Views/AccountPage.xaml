@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="My_Map_MAUI.Views.AccountPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:viewmodel="clr-namespace:My_Map_MAUI.ViewModels"
+    Title="{Binding Title}"
+    x:DataType="viewmodel:AccountViewModel">
+    <Grid>
+        <TableView Intent="Menu">
+            <TableRoot>
+                <TableSection Title="Menu">
+
+                    <ViewCell Tapped="ViewCell_Tapped">
+                        <HorizontalStackLayout Spacing="10">
+                            <Image
+                                HeightRequest="25"
+                                Source="password.png"
+                                WidthRequest="25" />
+                            <Label Text="Change password" />
+                        </HorizontalStackLayout>
+                    </ViewCell>
+                    <ViewCell Tapped="ViewCell_Tapped_2">
+                        <HorizontalStackLayout Spacing="10">
+                            <Image
+                                HeightRequest="25"
+                                Source="import_data.png"
+                                WidthRequest="25" />
+                            <Label Text="Import" />
+                        </HorizontalStackLayout>
+                    </ViewCell>
+                    <!--<ViewCell Tapped="ViewCell_Tapped_3">
+                        <HorizontalStackLayout Spacing="10">
+                            <Image
+                                HeightRequest="25"
+                                Source="export_data.png"
+                                WidthRequest="25" />
+                            <Label Text="Export" />
+                        </HorizontalStackLayout>
+                    </ViewCell>-->
+                    <ViewCell Tapped="ViewCell_Tapped_1">
+                        <HorizontalStackLayout Spacing="10">
+                            <Image
+                                HeightRequest="25"
+                                Source="logout.png"
+                                WidthRequest="25" />
+                            <Label Text="Sign out" />
+                        </HorizontalStackLayout>
+                    </ViewCell>
+                </TableSection>
+            </TableRoot>
+        </TableView>
+        <Grid IsVisible="{Binding IsBusy}">
+            <Frame BackgroundColor="White" Opacity="0.5" />
+            <Frame
+                BackgroundColor="White"
+                HorizontalOptions="CenterAndExpand"
+                VerticalOptions="CenterAndExpand">
+                <HorizontalStackLayout Spacing="10">
+                    <Label Text="{Binding Proccess}" VerticalOptions="Center" />
+                    <ActivityIndicator IsRunning="{Binding IsBusy}" />
+                </HorizontalStackLayout>
+            </Frame>
+        </Grid>
+    </Grid>
+</ContentPage>

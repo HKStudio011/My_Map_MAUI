@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="My_Map_MAUI.Views.DetailPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:viewmodel="clr-namespace:My_Map_MAUI.ViewModels"
+    Title="{Binding Title}"
+    x:DataType="viewmodel:DetailViewModels">
+    <Grid>
+        <Grid RowDefinitions="*,auto">
+            <ScrollView Grid.Row="0" Padding="10,0,10,0">
+                <VerticalStackLayout Spacing="10">
+                    <Frame
+                        Padding="0"
+                        BorderColor="{StaticResource Primary}"
+                        HeightRequest="35">
+                        <Grid ColumnDefinitions="auto,*" ColumnSpacing="5">
+                            <Image
+                                Grid.Column="0"
+                                Margin="5,0,0,0"
+                                Aspect="AspectFill"
+                                HeightRequest="25"
+                                Source="pin.png" />
+                            <Entry
+                                Grid.Column="1"
+                                Margin="0,0,40,0"
+                                Placeholder="Name"
+                                Text="{Binding Name, Mode=TwoWay}"
+                                TextChanged="Entry_TextChanged" />
+                        </Grid>
+                    </Frame>
+                    <Label
+                        FontSize="Caption"
+                        IsVisible="{Binding NameError, Mode=OneWay, Converter={viewmodel:StringCOnverterToBool}}"
+                        Text="{Binding NameError}"
+                        TextColor="Red" />
+                    <Frame
+                        Padding="0"
+                        BorderColor="{StaticResource Primary}"
+                        HeightRequest="35">
+                        <Grid ColumnDefinitions="auto,*" ColumnSpacing="5">
+                            <Image
+                                Grid.Column="0"
+                                Margin="5,0,0,0"
+                                Aspect="AspectFill"
+                                HeightRequest="25"
+                                Source="pin.png" />
+
+                            <Entry
+                                Grid.Column="1"
+                                Margin="0,0,40,0"
+                                Placeholder="Short Description"
+                                Text="{Binding ShortDescription, Mode=TwoWay}"
+                                TextChanged="Entry_TextChanged_1" />
+                        </Grid>
+                    </Frame>
+                    <Label
+                        FontSize="Caption"
+                        IsVisible="{Binding ShortDescriptionError, Mode=OneWay, Converter={viewmodel:StringCOnverterToBool}}"
+                        Text="{Binding ShortDescriptionError}"
+                        TextColor="Red" />
+                    <Frame
+                        Padding="0"
+                        BorderColor="{StaticResource Primary}"
+                        HeightRequest="60">
+                        <Grid ColumnDefinitions="auto,*" ColumnSpacing="5">
+                            <Image
+                                Grid.Column="0"
+                                Margin="5,5,0,0"
+                                Aspect="AspectFill"
+                                HeightRequest="25"
+                                Source="pin.png"
+                                VerticalOptions="Start" />
+                            <Picker
+                                Title="Select pin type"
+                                Grid.Column="1"
+                                Margin="0,0,40,0"
+                                ItemsSource="{Binding ListPinType}"
+                                SelectedItem="{Binding PinTypes}" />
+                        </Grid>
+                    </Frame>
+                    <Frame
+                        Padding="0"
+                        BorderColor="{StaticResource Primary}"
+                        HeightRequest="100">
+                        <Grid ColumnDefinitions="auto,*" ColumnSpacing="5">
+                            <Image
+                                Grid.Column="0"
+                                Margin="5,5,0,0"
+                                Aspect="AspectFill"
+                                HeightRequest="25"
+                                Source="pin.png"
+                                VerticalOptions="Start" />
+                            <Editor
+                                Grid.Column="1"
+                                Margin="0,0,40,0"
+                                Placeholder="Description"
+                                Text="{Binding Description, Mode=TwoWay}" />
+                        </Grid>
+                    </Frame>
+                </VerticalStackLayout>
+
+            </ScrollView>
+            <HorizontalStackLayout
+                Grid.Row="1"
+                HorizontalOptions="Center"
+                Spacing="10">
+                <Button
+                    Command="{Binding DeleteCommand}"
+                    IsEnabled="{Binding IsNotCreateNew}"
+                    Text="Delete" />
+                <Button Command="{Binding SaveCommand}" Text="Save">
+                    <Button.IsEnabled>
+                        <MultiBinding Converter="{viewmodel:AllTrueMultiConverter}" Mode="OneWay">
+                            <Binding Path="IsNameReady" />
+                            <Binding Path="IsShortDescriptionReady" />
+
+                        </MultiBinding>
+                    </Button.IsEnabled>
+                </Button>
+            </HorizontalStackLayout>
+        </Grid>
+
+        <Grid IsVisible="{Binding IsBusy}">
+            <Frame BackgroundColor="White" Opacity="0.5" />
+            <Frame
+                BackgroundColor="White"
+                HorizontalOptions="CenterAndExpand"
+                VerticalOptions="CenterAndExpand">
+                <HorizontalStackLayout Spacing="10">
+                    <Label Text="{Binding Proccess}" VerticalOptions="Center" />
+                    <ActivityIndicator IsRunning="{Binding IsBusy}" />
+                </HorizontalStackLayout>
+            </Frame>
+        </Grid>
+    </Grid>
+
+</ContentPage>

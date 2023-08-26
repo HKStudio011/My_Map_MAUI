@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="My_Map_MAUI.Views.SignInPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:viewmodel="clr-namespace:My_Map_MAUI.ViewModels"
+    x:DataType="viewmodel:SignInViewModels"
+    Shell.NavBarIsVisible="False">
+    <Grid>
+        <Grid RowDefinitions="auto,*,auto">
+            <Frame
+                BackgroundColor="Transparent"
+                BorderColor="Transparent"
+                HorizontalOptions="Center"
+                VerticalOptions="Center">
+
+                <Image
+                    Aspect="AspectFill"
+                    HeightRequest="150"
+                    Source="best_place.png"
+                    WidthRequest="150" />
+            </Frame>
+            <ScrollView Grid.Row="1" Padding="10,0,10,0">
+                <VerticalStackLayout Spacing="10">
+                    <Label
+                        FontSize="Title"
+                        HorizontalOptions="Center"
+                        Text="Sign In" />
+                    <Frame
+                        Padding="0"
+                        BorderColor="{StaticResource Primary}"
+                        HeightRequest="35">
+                        <Grid ColumnDefinitions="auto,*" ColumnSpacing="5">
+                            <Image
+                                Grid.Column="0"
+                                Margin="5,0,0,0"
+                                Aspect="AspectFill"
+                                HeightRequest="25"
+                                Source="email.png" />
+                            <Entry
+                                Grid.Column="1"
+                                Margin="0,0,40,0"
+                                Keyboard="Email"
+                                Placeholder="Email"
+                                Text="{Binding Email, Mode=TwoWay}"
+                                TextChanged="Entry_TextChanged" />
+                        </Grid>
+                    </Frame>
+
+                    <Label
+                        FontSize="Caption"
+                        IsVisible="{Binding EmailError, Mode=OneWay, Converter={viewmodel:StringCOnverterToBool}}"
+                        Text="{Binding EmailError}"
+                        TextColor="Red" />
+
+                    <Frame
+                        Padding="0"
+                        BorderColor="{StaticResource Primary}"
+                        HeightRequest="35">
+                        <Grid ColumnDefinitions="auto,*" ColumnSpacing="5">
+                            <Image
+                                Grid.Column="0"
+                                Margin="5,0,0,0"
+                                Aspect="AspectFill"
+                                HeightRequest="25"
+                                HorizontalOptions="Center"
+                                Source="key.png"
+                                VerticalOptions="Center" />
+                            <Entry
+                                Grid.Column="1"
+                                Margin="0,0,40,0"
+                                FontSize="Caption"
+                                IsPassword="{Binding IsNotShowPass}"
+                                MaxLength="32"
+                                Placeholder="Password"
+                                Text="{Binding Password, Mode=TwoWay}"
+                                TextChanged="Entry_TextChanged_1" />
+                            <Frame
+                                Grid.Column="1"
+                                Margin="10,0"
+                                Padding="0"
+                                BackgroundColor="Transparent"
+                                BorderColor="Transparent"
+                                HorizontalOptions="End"
+                                VerticalOptions="Center">
+                                <Grid>
+                                    <Image
+                                        Aspect="AspectFill"
+                                        HeightRequest="25"
+                                        IsVisible="{Binding IsShowPass}"
+                                        Source="show.png"
+                                        WidthRequest="25" />
+                                    <Image
+                                        Aspect="AspectFill"
+                                        HeightRequest="25"
+                                        IsVisible="{Binding IsNotShowPass}"
+                                        Source="hide.png"
+                                        WidthRequest="25" />
+                                </Grid>
+                                <Frame.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding HidePasswordCommand}" />
+                                </Frame.GestureRecognizers>
+                            </Frame>
+
+                        </Grid>
+                    </Frame>
+                    <Label
+                        FontSize="Caption"
+                        IsVisible="{Binding PasswordError, Mode=OneWay, Converter={viewmodel:StringCOnverterToBool}}"
+                        Text="{Binding PasswordError}"
+                        TextColor="Red" />
+                    <Grid ColumnDefinitions="auto,*,*">
+
+                        <CheckBox Grid.Column="0" IsChecked="{Binding IsRememberMe, Mode=TwoWay}" />
+                        <Label
+                            Grid.Column="1"
+                            HorizontalOptions="StartAndExpand"
+                            Text="Remember me"
+                            VerticalOptions="CenterAndExpand">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding RememberMeCommand}" />
+                            </Label.GestureRecognizers>
+                        </Label>
+
+                        <Label
+                            Grid.Column="2"
+                            HorizontalOptions="End"
+                            Text="Forgot password?"
+                            TextColor="{StaticResource Primary}"
+                            VerticalOptions="Center">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding GoToForgotPasswordPageCommand}" />
+                            </Label.GestureRecognizers>
+                        </Label>
+                    </Grid>
+                    <Button
+                        Command="{Binding SignInCommand}"
+                        HorizontalOptions="Center"
+                        Text="Sign in">
+                        <Button.IsEnabled>
+                            <MultiBinding Converter="{viewmodel:AllTrueMultiConverter}" Mode="OneWay">
+                                <Binding Path="IsEmailReady" />
+                                <Binding Path="IsPasswordReady" />
+                            </MultiBinding>
+                        </Button.IsEnabled>
+                    </Button>
+
+                </VerticalStackLayout>
+            </ScrollView>
+
+            <Label
+                Grid.Row="2"
+                Margin="0,0,0,80"
+                HorizontalOptions="Center"
+                VerticalOptions="End">
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span Text="Sign up " TextColor="{StaticResource Primary}" />
+                        <Span Text="if you don't have an account yet" />
+                    </FormattedString>
+                </Label.FormattedText>
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding GoToSignUpPageCommand}" />
+                </Label.GestureRecognizers>
+            </Label>
+
+        </Grid>
+        <Grid IsVisible="{Binding IsBusy}">
+            <Frame BackgroundColor="White" Opacity="0.5" />
+            <Frame
+                BackgroundColor="White"
+                HorizontalOptions="CenterAndExpand"
+                VerticalOptions="CenterAndExpand">
+                <HorizontalStackLayout Spacing="10">
+                    <Label Text="{Binding Proccess}" VerticalOptions="Center" />
+                    <ActivityIndicator IsRunning="{Binding IsBusy}" />
+                </HorizontalStackLayout>
+            </Frame>
+        </Grid>
+    </Grid>
+</ContentPage>

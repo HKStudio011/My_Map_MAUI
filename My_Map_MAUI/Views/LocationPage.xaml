@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="My_Map_MAUI.Views.LocationPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:model="clr-namespace:My_Map_MAUI.Models"
+    xmlns:viewmodel="clr-namespace:My_Map_MAUI.ViewModels"
+    Title="{Binding Title}"
+    x:DataType="viewmodel:LocationViewModels">
+    <Grid>
+        <CollectionView ItemsSource="{Binding ItemsCollection}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="model:Items">
+                    <Frame
+                        Margin="10,5,10,5"
+                        Padding="0"
+                        x:DataType="model:PinItems"
+                        BorderColor="{StaticResource Primary}"
+                        HeightRequest="50">
+                        <Grid ColumnDefinitions="auto,*" ColumnSpacing="5">
+                            <Image
+                                Grid.Column="0"
+                                Margin="5,0,0,0"
+                                Aspect="AspectFill"
+                                HeightRequest="45"
+                                Source="pin.png" />
+                            <VerticalStackLayout Grid.Column="1" Spacing="5">
+                                <Label
+                                    Grid.Column="1"
+                                    Margin="0,0,40,0"
+                                    FontAttributes="Bold"
+                                    FontSize="Body"
+                                    Text="{Binding Label}" />
+                                <Label
+                                    Grid.Column="1"
+                                    Margin="0,0,40,0"
+                                    FontAttributes="Italic"
+                                    FontSize="Caption"
+                                    Text="{Binding Label}" />
+                            </VerticalStackLayout>
+                        </Grid>
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:LocationViewModels}}, Path=GoToDetailViewPinCommand}" CommandParameter="{Binding .}" />
+                        </Frame.GestureRecognizers>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <Grid IsVisible="{Binding IsBusy}">
+            <Frame BackgroundColor="White" Opacity="0.5" />
+            <Frame
+                BackgroundColor="White"
+                HorizontalOptions="CenterAndExpand"
+                VerticalOptions="CenterAndExpand">
+                <HorizontalStackLayout Spacing="10">
+                    <Label Text="{Binding Proccess}" VerticalOptions="Center" />
+                    <ActivityIndicator IsRunning="{Binding IsBusy}" />
+                </HorizontalStackLayout>
+            </Frame>
+        </Grid>
+
+    </Grid>
+</ContentPage>
