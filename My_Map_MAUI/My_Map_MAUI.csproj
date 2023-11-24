@@ -48,32 +48,6 @@
 		<MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
 	</ItemGroup>
 
-	<ItemGroup>
-	  <None Remove="Resources\Images\best_place.png" />
-	  <None Remove="Resources\Images\calendar.png" />
-	  <None Remove="Resources\Images\checkbox.png" />
-	  <None Remove="Resources\Images\description.png" />
-	  <None Remove="Resources\Images\edit_info.png" />
-	  <None Remove="Resources\Images\email.png" />
-	  <None Remove="Resources\Images\export_data.png" />
-	  <None Remove="Resources\Images\globe.png" />
-	  <None Remove="Resources\Images\hide.png" />
-	  <None Remove="Resources\Images\import_data.png" />
-	  <None Remove="Resources\Images\info.png" />
-	  <None Remove="Resources\Images\key.png" />
-	  <None Remove="Resources\Images\logout.png" />
-	  <None Remove="Resources\Images\map.png" />
-	  <None Remove="Resources\Images\notes.png" />
-	  <None Remove="Resources\Images\password.png" />
-	  <None Remove="Resources\Images\pin.png" />
-	  <None Remove="Resources\Images\price_tag.png" />
-	  <None Remove="Resources\Images\search.png" />
-	  <None Remove="Resources\Images\security.png" />
-	  <None Remove="Resources\Images\show.png" />
-	  <None Remove="Resources\Images\user.png" />
-	  <None Remove="Resources\Images\user_1.png" />
-	</ItemGroup>
-
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.Maui" Version="5.3.0" />
     <PackageReference Include="CommunityToolkit.Maui.Maps" Version="1.0.4" />

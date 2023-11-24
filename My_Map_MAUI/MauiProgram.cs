@@ -11,7 +11,7 @@ public static class MauiProgram
             .UseMauiApp<App>()
             .UseMauiCommunityToolkit()
             .UseMauiCommunityToolkitMarkup()
-            .UseMauiCommunityToolkitMaps("XpQm8KPnpIE06dEi3gje~9NCOWax8DD1J6pfaazlnpQ~Arb_qB4_-JG_q_eDPz_8LpX_OnZMtgtAwI8kta8nRz8sfAmq_qKf-MHPPLhM4VtQ")
+            .UseMauiCommunityToolkitMaps("API KEY BING MAP")
             .ConfigureFonts(fonts =>
             {
                 fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
